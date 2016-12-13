@@ -1,9 +1,5 @@
 #ListView和ExpandableListView的侧滑删除操作
-             <!-- 正文 -->
-            <div class="blog-body" id="blogBody">
-                                    <val data-name="blog_content_type" data-value="richtext"></val>
-                    <div class='BlogContent'>
-                        <p>本案例主要实现了ListView和<strong>ExpandableListView</strong>的侧滑删除操作功能</p> 
+<p>本案例主要实现了ListView和<strong>ExpandableListView</strong>的侧滑删除操作功能</p> 
 <p>效果图：</p> 
 <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img alt="" height="570" src="https://static.oschina.net/uploads/space/2016/1129/092847_omH7_2945455.gif" width="408"></p> 
 <p>代码：</p> 
@@ -373,3 +369,6 @@ public class ActivityListViewDelete extends Activity implements
 }</code></pre> 
 <p>此代码是ListView的侧滑删除操作，ExpandableListView未贴出来，下载代码即可，两个都有。</p> 
 <span id="OSC_h2_1"></span>
+<h2><strong><span style="color:#B22222">源码下载：</span></strong></h2> 
+<p>&nbsp;</p> 
+<p>Eclipse下载：<a href="http://download.csdn.net/detail/dickyqie/9627652" target="_blank" rel="nofollow">http://download.csdn.net/detail/dickyqie/9627652</a></p> 
