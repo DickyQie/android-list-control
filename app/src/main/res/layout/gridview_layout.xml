@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- android:verticalSpacing="10dp"表示行与行之间的间距 -->
+    <!-- android:horizontalSpacing="30dp" 表示列与列之间的间距 -->
+    <!-- android:numColumns="3"  一排的个数-->
+    <GridView
+        android:id="@+id/show_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="30dp"
+        android:numColumns="3"
+        android:verticalSpacing="10dp" />
+
+</LinearLayout>

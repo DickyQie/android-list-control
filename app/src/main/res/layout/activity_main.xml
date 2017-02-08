@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <Button
+        android:id="@+id/btnList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ListView"
+        />
+
+    <Button
+        android:id="@+id/btnGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GridView"
+        />
+
+    <Button
+        android:id="@+id/btnGrlley"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grlley"
+        />
+
+</LinearLayout>
