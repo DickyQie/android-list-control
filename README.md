@@ -1,4 +1,4 @@
-# Android-------ListView列表中获取EditText输入的值 
+## Android-------ListView列表中获取EditText输入的值 
 <p>最近项目的购物车中用列表中包含了留言功能, 需要获取EditText输入的内容，当购买多件商品时，就有点棘手了。</p> 
 <p>经过查资料解决了这个功能，并写了一个案例；</p> 
 <p>&nbsp;&nbsp; 效果图：</p> 
