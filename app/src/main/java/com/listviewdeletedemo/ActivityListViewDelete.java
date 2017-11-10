@@ -30,7 +30,6 @@ import com.util.ZQView;
 public class ActivityListViewDelete extends Activity implements
 		OnItemClickListener, OnClickListener {
 
-	private static final String TAG = "ActivityListViewDelete";
 
 	private ZQListView mListView;
 
@@ -44,23 +43,11 @@ public class ActivityListViewDelete extends Activity implements
 		initView();
 	}
 
-	public static int[] Img = { R.mipmap.ssdk_oks_classic_qq,
-			R.mipmap.ssdk_oks_classic_qzone,
-			R.mipmap.ssdk_oks_classic_shortmessage,
-			R.mipmap.ssdk_oks_classic_sinaweibo,
-			R.mipmap.ssdk_oks_classic_tencentweibo,
-			R.mipmap.ssdk_oks_classic_vkontakte,
-			R.mipmap.ssdk_oks_classic_wechat,
-			R.mipmap.ssdk_oks_classic_wechatfavorite,
-			R.mipmap.ssdk_oks_classic_wechatmoments,
-			R.mipmap.ssdk_oks_classic_yixinmoments };
 
 	private void initView() {
 		mListView = (ZQListView) findViewById(R.id.list);
-		int length = Img.length;
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < 12; i++) {
 			MessageItem item = new MessageItem();
-			item.iconRes = Img[i];
 			item.title = "标题" + (i + 1);
 			item.msg = "消息" + (i + 1);
 			item.time = "2016-6-1" + i;
@@ -111,7 +98,6 @@ public class ActivityListViewDelete extends Activity implements
 			}
 			MessageItem item = mMessageItems.get(position);
 			slideView.shrink();
-			holder.icon.setImageResource(item.iconRes);
 			holder.title.setText(item.title);
 			holder.time.setText(item.time);
 			holder.deleteHolder.setOnClickListener(ActivityListViewDelete.this);
@@ -122,7 +108,6 @@ public class ActivityListViewDelete extends Activity implements
 	}
 
 	public class MessageItem {
-		public int iconRes;
 		public String title;
 		public String msg;
 		public String time;

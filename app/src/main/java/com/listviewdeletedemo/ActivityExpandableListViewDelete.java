@@ -1,20 +1,12 @@
 package com.listviewdeletedemo;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
-
-import com.util.ZQExpandableListView;
-import com.util.ZQView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,181 +18,80 @@ import java.util.List;
  * @author zhangqie
  */
 
-public class ActivityExpandableListViewDelete extends Activity implements
-        OnItemClickListener {
+public class ActivityExpandableListViewDelete extends AppCompatActivity{
 
-    private static final String TAG = "ActivityExpandableListViewDelete";
-
-    private ZQExpandableListView mListView;
-
-    private List<String> ml1, ml2;
-
-    private List<String> group;
-    private List<List<String>> child;
+    private List<UserInfo> list =new ArrayList<>();
+    private Context context;
+    private ExpandableListView myElv;
+    private MyElvAdapter myAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expandablelistview);
+        context = this;
         initData();
         initView();
     }
 
-    private void initView() {
-        mListView = (ZQExpandableListView) findViewById(R.id.expandablelist);
-        mListView.setAdapter(new SlideAdapter());
-        mListView.setOnItemClickListener(this);
-    }
-
-    private class SlideAdapter extends BaseExpandableListAdapter {
-
-        private LayoutInflater mInflater;
-
-        SlideAdapter() {
-            super();
-            mInflater = getLayoutInflater();
+    public void initView() {
+        myElv = (ExpandableListView) findViewById(R.id.expandablelist);
+        myAdapter = new MyElvAdapter(context, myElv,list);
+        myElv.setAdapter(myAdapter);
+        myElv.setGroupIndicator(null);
+        int  intgroupCount = myElv.getCount();
+        //全部展开
+        for (int i=0; i<intgroupCount; i++)
+        {
+            myElv.expandGroup(i);
         }
-
-        @Override
-        public int getGroupCount() {
-            // TODO Auto-generated method stub
-            return group.size();
-        }
-
-        @Override
-        public int getChildrenCount(int groupPosition) {
-            // TODO Auto-generated method stub
-            return child.size();
-        }
-
-        @Override
-        public Object getGroup(int groupPosition) {
-            // TODO Auto-generated method stub
-            return group.get(groupPosition);
-        }
-
-        @Override
-        public Object getChild(int groupPosition, int childPosition) {
-            // TODO Auto-generated method stub
-            return child.get(groupPosition).get(childPosition);
-        }
-
-        @Override
-        public long getGroupId(int groupPosition) {
-            // TODO Auto-generated method stub
-            return groupPosition;
-        }
-
-        @Override
-        public long getChildId(int groupPosition, int childPosition) {
-            // TODO Auto-generated method stub
-            return childPosition;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        @Override
-        public View getGroupView(int groupPosition, boolean isExpanded,
-                                 View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
-            TextView t = null;
-            if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.group_item, null);
-
-                t = (TextView) convertView.findViewById(R.id.textView1);
-                convertView.setTag(t);
-            } else {
-                t = (TextView) convertView.getTag();
+        myAdapter.setOnClickDeleteListenter(new OnClickDeleteListenter() {
+            @Override
+            public void onItemClick(View view, int onePosition, int position) {
+                 Toast.makeText(ActivityExpandableListViewDelete.this,"删除操作",Toast.LENGTH_SHORT).show();
             }
-            t.setText(group.get(groupPosition));
-            return convertView;
-        }
-
-        @Override
-        public View getChildView(int groupPosition, int childPosition,
-                                 boolean isLastChild, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            ZQView slideView = (ZQView) convertView;
-            if (slideView == null) {
-                View itemView = mInflater.inflate(R.layout.list_item, null);
-
-                slideView = new ZQView(ActivityExpandableListViewDelete.this);
-                slideView.setContentView(itemView);
-                holder = new ViewHolder(slideView);
-                slideView.setTag(holder);
-            } else {
-                holder = (ViewHolder) slideView.getTag();
-            }
-
-            slideView.shrink();
-            holder.icon
-                    .setImageResource(ActivityListViewDelete.Img[childPosition]);
-            holder.title.setText(child.get(groupPosition).get(childPosition));
-            holder.deleteHolder.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    Toast.makeText(ActivityExpandableListViewDelete.this,
-                            "删除操作", Toast.LENGTH_LONG).show();
-                }
-            });
-
-            return slideView;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            // TODO Auto-generated method stub
-            return false;
-        }
+        });
 
     }
 
-    private static class ViewHolder {
-        public ImageView icon;
-        public TextView title;
-        public ViewGroup deleteHolder;
-
-        ViewHolder(View view) {
-            icon = (ImageView) view.findViewById(R.id.icon);
-            title = (TextView) view.findViewById(R.id.title);
-            deleteHolder = (ViewGroup) view.findViewById(R.id.holder);
-        }
+    private void initData(){
+        UserInfo user1=new UserInfo();
+        user1.setId(0);
+        user1.setCheckBox(false);
+        user1.setDatas(show1());
+        list.add(user1);
+        UserInfo user2=new UserInfo();
+        user2.setId(1);
+        user2.setCheckBox(false);
+        user2.setDatas(show2());
+        list.add(user2);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-        Toast.makeText(this, "onItemClick position=" + position, Toast.LENGTH_LONG).show();
-
+    private  List<UserInfo.Data> show1(){
+        List<UserInfo.Data> list =new ArrayList<>();
+        UserInfo.Data data=new UserInfo().new Data();
+        data.setName("歆语博客");
+        data.setAge("18");
+        data.setCheckBox(false);
+        list.add(data);
+        return list;
     }
 
-    private void initData() {
-        group = new ArrayList<String>();
-        child = new ArrayList<List<String>>();
-        addInfo("北京", new String[]{"朝阳", "海淀", "东城区"});
-        addInfo("河北", new String[]{"邯郸", "石家庄", "邢台"});
-        addInfo("广东", new String[]{"广州", "深圳", "珠海"});
+    private  List<UserInfo.Data> show2(){
+        List<UserInfo.Data> list =new ArrayList<>();
+        UserInfo.Data data=new UserInfo().new Data();
+        data.setName("切切歆语");
+        data.setAge("19");
+        data.setCheckBox(false);
+        list.add(data);
+        UserInfo.Data data1=new UserInfo().new Data();
+        data1.setName("胡歌");
+        data1.setAge("36");
+        data1.setCheckBox(false);
+        list.add(data1);
+        return list;
     }
 
-    /**
-     * 添加数据信息
-     *
-     * @param g
-     * @param c
-     */
-    private void addInfo(String g, String[] c) {
-        group.add(g);
-        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < c.length; i++) {
-            list.add(c[i]);
-        }
-        child.add(list);
-    }
+
 
 }
